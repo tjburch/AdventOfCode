@@ -181,7 +181,7 @@ function main()
             ct +=1
         end
     end
-    print("Problem 1 sum: ", ct)
+    println("Problem 1 sum: ", ct)
 
 
 
@@ -231,7 +231,7 @@ function main()
             ct +=1
         end
     end
-    print("Problem 2 sum: ", ct)
+    println("Problem 2 sum: ", ct)
  
 
 end
