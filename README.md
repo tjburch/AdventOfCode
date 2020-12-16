@@ -5,6 +5,8 @@ See https://adventofcode.com/ for more information
 
 ## Highlights
 
+Here are some solutions I found particularly interesting, or additional plots and graphics I made along the way.
+
 ### Solution for December 11
 
 I decided to visualize this variant on Conway's Game of Life, and I quite like how they came out:
@@ -23,3 +25,9 @@ As soon as people start to arrive, you realize your mistake. People don't just c
 Also, people seem to be more tolerant than you expected: it now takes five or more visible occupied seats for an occupied seat to become empty (rather than four or more from the previous rules). The other rules still apply: empty seats that see no occupied seats become occupied, seats matching no rule don't change, and floor never changes.
 
 ![Solution Number 2](outputs/dec11-2.gif)
+
+### Solution for December 12
+
+This question found us tracking a ship as it navigates instructions, given by cardinal directions as well as relative directions based on orientation which rotates. I created a graphic showing the evolution of the venture as instructions pass.
+
+![December 12, solution 1](outputs/dec12-1.gif)
