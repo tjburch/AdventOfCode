@@ -1,7 +1,7 @@
 using StatsBase
 using Makie
 
-MAKE_GIF = false
+MAKE_GIF = true
 
 function get_dims(state)
     dims = CartesianIndices(state)[end]
@@ -21,11 +21,12 @@ function in_bounds(r, c, nrows, ncols, current)
 end
 
 """
+*** Count function for part 1 ***
 Builds a scanning window over previous and next indices, counts number seated
+
 Arguments
 - idx: Current seat index
 - state: Full seated state
-- distance: How far to count
 """
 function seated_neighbors(idx, state)
 
@@ -47,7 +48,15 @@ function seated_neighbors(idx, state)
     return ct
 end
 
+"""
+*** Count function for part 2 ***
+Builds a scanning window over previous and next indices, counts number seated
+If a floor, continues to scan in that direction until a seat or boundary is encountered 
 
+Arguments
+- idx: Current seat index
+- state: Full seated state
+"""
 function visible_seats(idx, state)
 
     nrows, ncols = get_dims(state)
@@ -90,6 +99,8 @@ function visible_seats(idx, state)
     end
     return ct
 end
+
+
 """
 If a seat is empty (L) and there are no occupied seats adjacent to it, the seat becomes occupied.
 If a seat is occupied (#) and four or more seats adjacent to it are also occupied, the seat becomes empty.
@@ -124,7 +135,6 @@ function main()
     ### Part 1 - 
     start_state = [encoder[i] for i in init_state]
     terminate = false
-    c = 0
     bufs = []
     while !terminate
         # Plot initial state
@@ -135,8 +145,6 @@ function main()
         else
             start_state = next_iter
         end
-        c +=1         
-
     end
 
     if MAKE_GIF
@@ -148,17 +156,17 @@ function main()
             padding = (0,0),
             colorrange = (0,1),
             axis = (names = ( axisnames = ("",""),),),
-            #colormap=:default		
-            )    
+            #resolution = RESOLUTION,
+            show_axis = false
+            )
 
 
-        record(scene, "outputs/dec11-1.gif", 1:c, framerate = 6) do i
+        record(scene, "outputs/dec11-1.gif", 1:length(bufs), framerate = 6) do i
             Makie.heatmap!(
                 scene, 
                 collect(1:nrows),
                 collect(1:ncols),
                 bufs[i],
-                #colormap=:default
                 )
             yield()
         end
@@ -166,7 +174,7 @@ function main()
     end
 
 
-    # count up 1s
+    # count up 1's for solution
     ct = 0
     for idx in CartesianIndices(start_state)
         if start_state[idx[1],idx[2]] == 1
@@ -180,22 +188,43 @@ function main()
     ### Part 2 - 
     start_state = [encoder[i] for i in init_state]
     terminate = false
-    i = 0
-    c = 0
+    bufs = []
     while !terminate
-        println(" Now doing iter ", c)
+        push!(bufs, start_state)
         next_iter = run_iteration(start_state, 5, visible_seats)
         if next_iter == start_state
             terminate = true
         else
             start_state = next_iter
         end
-        i += 1
-
-        c +=1 
     end
 
-    # count up 1s
+    if MAKE_GIF
+        nrows, ncols = get_dims(start_state)
+        scene = Makie.heatmap(
+            collect(1:nrows),
+            collect(1:ncols),
+            bufs[1],
+            padding = (0,0),
+            colorrange = (0,1),
+            axis = (names = ( axisnames = ("",""),),),
+            show_axis = false
+            )    
+
+
+        record(scene, "outputs/dec11-2.gif", 1:length(bufs), framerate = 6) do i
+            Makie.heatmap!(
+                scene, 
+                collect(1:nrows),
+                collect(1:ncols),
+                bufs[i],
+                )
+            yield()
+        end
+        sc_t = title(scene, "test")
+    end
+
+    # count up 1s for solution
     ct = 0
     for idx in CartesianIndices(start_state)
         if start_state[idx[1],idx[2]] == 1
