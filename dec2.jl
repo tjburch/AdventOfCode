@@ -74,7 +74,7 @@ function main()
         string_valid_passwords += Int(string_validity(password, char, range))
     end
     println("(Part 1) Final number of valid passwords: ", valid_passwords)
-    println("(Part 2) Final number of sting-matchin passwords: ", string_valid_passwords)
+    println("(Part 2) Final number of sting-matching passwords: ", string_valid_passwords)
 
 end
 
