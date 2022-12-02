@@ -1,5 +1,5 @@
 # Day 2:
-# Sucess! Time elapsed = 24:54
+# Success! Time elapsed = 24:54
 
 # Text: https://adventofcode.com/2022/day/2
 
