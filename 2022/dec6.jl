@@ -5,19 +5,18 @@
 
 input = readchomp("2022/inputs/dec6-input.txt")
 
-# Part 1
-for i in 4:length(input)
-    curr_set = input[i-3:i]
-    if allunique(curr_set)
-        return i
+function find_unique_set(set_size, input)
+
+    for i in set_size:length(input)
+        curr_set = input[i-(set_size-1):i]
+        if allunique(curr_set)
+            return i
+        end
     end
 end
+
+# Part 1
+find_unique_set(4, input) |> println
 
 # Part 2
-for i in 14:length(input)
-    curr_set = input[i-13:i]
-    if allunique(curr_set)
-        return i
-    end
-end
-
+find_unique_set(14, input) |> println
